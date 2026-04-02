@@ -34,38 +34,58 @@
     flex-direction: column;
   }
 
-  header { padding: 20px 20px 14px; border-bottom: 1px solid var(--border); }
-  header h1 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; }
-  header p { font-size: 0.82rem; color: var(--muted); margin-top: 3px; }
+  header { padding: 16px 20px 12px; border-bottom: 1px solid var(--border); }
+  header h1 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+  header p { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
 
+  /* TABS */
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .tab {
+    flex: 1;
+    padding: 11px 4px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* PANELS */
+  .panel { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+  .panel.active { display: flex; }
+
+  /* ===== PANEL: INSPREKEN ===== */
   .mic-section {
-    padding: 22px 20px 16px;
+    padding: 18px 20px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
 
   .mic-btn {
-    width: 100px; height: 100px;
+    width: 90px; height: 90px;
     border-radius: 50%;
     border: none;
     background: var(--surface2);
     cursor: pointer;
-    font-size: 2.7rem;
+    font-size: 2.4rem;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     user-select: none;
     transition: background 0.2s;
   }
-
   .mic-btn.listening { background: var(--accent-dim); animation: pulse 1.2s ease-in-out infinite; }
   .mic-btn.listening::after {
     content: '';
-    position: absolute;
-    inset: -8px;
+    position: absolute; inset: -8px;
     border-radius: 50%;
     border: 2px solid var(--accent);
     opacity: 0.5;
@@ -77,122 +97,149 @@
   @keyframes slideIn{ from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
   @keyframes blink  { 0%,100%{opacity:1} 50%{opacity:.2} }
 
-  .mic-label { font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+  .mic-label { font-size: 0.82rem; font-weight: 600; color: var(--muted); }
   .mic-label.active { color: var(--accent); }
 
   .status-bar {
     margin: 0 20px 10px;
-    min-height: 36px;
+    min-height: 34px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 0.84rem;
+    padding: 7px 13px;
+    font-size: 0.83rem;
     color: var(--muted);
     font-style: italic;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    display: flex; align-items: center; gap: 8px;
   }
   .status-bar.active { color: var(--text); font-style: normal; border-color: var(--accent); }
   .status-bar.done   { color: var(--accent); font-style: normal; border-color: var(--accent-dim); }
   .status-bar.error  { color: var(--red); font-style: normal; border-color: var(--red-dim); }
+  .dot { width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1s ease-in-out infinite;flex-shrink:0; }
 
-  .dot { width:8px; height:8px; border-radius:50%; background:var(--accent); animation:blink 1s ease-in-out infinite; flex-shrink:0; }
-
-  .type-row { display: flex; gap: 8px; margin: 0 20px 12px; }
-
+  .type-row { display: flex; gap: 8px; margin: 0 20px 10px; }
   .type-input {
     flex: 1;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 10px 14px;
+    padding: 9px 13px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--text);
-    outline: none;
-    -webkit-appearance: none;
-    appearance: none;
+    font-size: 0.93rem; font-weight: 500;
+    color: var(--text); outline: none;
+    -webkit-appearance: none; appearance: none;
   }
   .type-input:focus { border-color: var(--accent); }
   .type-input::placeholder { color: var(--muted); font-style: italic; }
-
   .type-btn {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 16px;
-    color: var(--accent);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 9px 15px;
+    color: var(--accent); font-family: 'DM Sans', sans-serif;
+    font-weight: 700; font-size: 1rem; cursor: pointer;
   }
 
-  .list-header { display: flex; align-items: center; justify-content: space-between; padding: 4px 20px 8px; }
-  .list-header h2 { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-  .list-count { background: var(--surface2); color: var(--muted); border-radius: 99px; font-size: 0.72rem; font-weight: 700; padding: 2px 10px; }
+  /* ===== PANEL: FAVORIETEN ===== */
+  .fav-panel { padding: 12px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; overflow: hidden; }
 
-  .shopping-list { flex: 1; overflow-y: auto; padding: 0 20px 16px; display: flex; flex-direction: column; gap: 7px; }
-  .list-empty { text-align: center; color: var(--muted); padding: 30px 20px; font-size: 0.88rem; line-height: 1.7; }
+  .alpha-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: flex-start;
+  }
+  .alpha-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700; font-size: 0.82rem;
+    color: var(--text);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.12s;
+  }
+  .alpha-btn.selected { background: var(--accent); color: #0f1117; border-color: var(--accent); }
+  .alpha-btn:active { transform: scale(0.92); }
 
-  .list-item {
+  .fav-empty { text-align: center; color: var(--muted); padding: 30px 10px; font-size: 0.87rem; line-height: 1.7; }
+
+  .fav-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    overflow-y: auto;
+    flex: 1;
+    padding-bottom: 10px;
+  }
+
+  .fav-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 11px 13px;
-    display: flex;
-    align-items: center;
-    gap: 11px;
+    border-radius: 11px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.88rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 6px;
+    transition: all 0.12s;
+    animation: slideIn 0.2s ease;
+  }
+  .fav-card:active { transform: scale(0.96); }
+  .fav-card.on-list { border-color: var(--accent); background: #0d2118; color: var(--accent); }
+  .fav-card .fav-del { color: var(--muted); font-size: 0.8rem; padding: 2px 4px; background: none; border: none; cursor: pointer; flex-shrink: 0; }
+
+  /* ===== PANEL: LIJST ===== */
+  .list-panel { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+  .list-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px 6px; }
+  .list-header h2 { font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .list-count { background: var(--surface2); color: var(--muted); border-radius: 99px; font-size: 0.7rem; font-weight: 700; padding: 2px 9px; }
+
+  .shopping-list { flex: 1; overflow-y: auto; padding: 0 20px 10px; display: flex; flex-direction: column; gap: 7px; }
+  .list-empty { text-align: center; color: var(--muted); padding: 30px 20px; font-size: 0.87rem; line-height: 1.7; }
+
+  .list-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 10px 12px;
+    display: flex; align-items: center; gap: 10px;
     animation: slideIn 0.22s ease;
   }
   .list-item.done { opacity: 0.4; }
 
   .check-btn {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    border: 2px solid var(--border);
-    background: transparent;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem;
-    flex-shrink: 0;
-    color: transparent;
-    transition: all 0.15s;
+    width: 27px; height: 27px; border-radius: 50%;
+    border: 2px solid var(--border); background: transparent;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 0.78rem; flex-shrink: 0; color: transparent; transition: all 0.15s;
   }
   .list-item.done .check-btn { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 
-  .item-name { flex: 1; font-weight: 500; font-size: 0.97rem; }
+  .item-name { flex: 1; font-weight: 500; font-size: 0.93rem; }
   .list-item.done .item-name { text-decoration: line-through; color: var(--muted); }
 
-  .qty-ctrl { display: flex; align-items: center; gap: 5px; }
+  .qty-ctrl { display: flex; align-items: center; gap: 4px; }
   .qty-btn {
-    width: 26px; height: 26px;
-    border-radius: 7px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    color: var(--text);
-    font-size: 1.1rem; font-weight: 700;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    line-height: 1;
+    width: 25px; height: 25px; border-radius: 7px;
+    border: 1px solid var(--border); background: var(--surface2);
+    color: var(--text); font-size: 1rem; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;
   }
-  .qty-num { font-weight: 700; font-size: 0.95rem; min-width: 22px; text-align: center; color: var(--accent); }
-  .del-btn { background: none; border: none; color: var(--muted); font-size: 1rem; cursor: pointer; padding: 4px; }
+  .qty-num { font-weight: 700; font-size: 0.93rem; min-width: 20px; text-align: center; color: var(--accent); }
+  .del-btn { background: none; border: none; color: var(--muted); font-size: 0.95rem; cursor: pointer; padding: 4px; }
 
-  .bottom-bar { padding: 10px 20px 22px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
-  .btn { flex: 1; padding: 13px; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; border: none; }
-  .btn-wis  { background: var(--red-dim);    color: var(--red);    flex: 1; }
+  /* BOTTOM */
+  .bottom-bar { padding: 8px 20px 20px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
+  .btn { flex: 1; padding: 12px; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.88rem; cursor: pointer; border: none; }
+  .btn-wis  { background: var(--red-dim); color: var(--red); flex: 1; }
   .btn-deel { background: var(--accent-dim); color: var(--accent); flex: 2; }
 
   .toast {
-    position: fixed; bottom: 90px; left: 50%;
+    position: fixed; bottom: 80px; left: 50%;
     transform: translateX(-50%) translateY(10px);
     background: var(--surface2); color: var(--text);
     border: 1px solid var(--border); border-radius: 99px;
-    padding: 10px 20px; font-size: 0.85rem; font-weight: 600;
+    padding: 9px 18px; font-size: 0.83rem; font-weight: 600;
     opacity: 0; transition: all 0.25s; white-space: nowrap;
     z-index: 999; pointer-events: none;
   }
@@ -203,143 +250,129 @@
 
 <header>
   <h1>🛒 Boodschappen</h1>
-  <p>Inspreken of typen</p>
+  <p>Inspreken, typen of kiezen uit favorieten</p>
 </header>
 
-<div class="mic-section">
-  <button class="mic-btn" id="mic-btn" onclick="toggleListen()">🎙️</button>
-  <div class="mic-label" id="mic-label">Tik om in te spreken</div>
+<div class="tabs">
+  <div class="tab active" id="tab-spreek" onclick="switchTab('spreek')">🎙️ Inspreken</div>
+  <div class="tab" id="tab-fav"   onclick="switchTab('fav')">⭐ Favorieten</div>
+  <div class="tab" id="tab-lijst" onclick="switchTab('lijst')">📋 Lijst <span id="badge" style="display:none;background:#4ade80;color:#0f1117;border-radius:99px;font-size:0.68rem;padding:1px 6px;margin-left:2px">0</span></div>
 </div>
 
-<div class="status-bar" id="status-bar">
-  <span id="status-text">Zeg bijv. "melk, brood en twee pakken yoghurt"</span>
+<!-- INSPREKEN -->
+<div class="panel active" id="panel-spreek">
+  <div class="mic-section">
+    <button class="mic-btn" id="mic-btn" onclick="toggleListen()">🎙️</button>
+    <div class="mic-label" id="mic-label">Tik om in te spreken</div>
+  </div>
+  <div class="status-bar" id="status-bar">
+    <span id="status-text">Zeg bijv. "melk, brood en twee pakken yoghurt"</span>
+  </div>
+  <div class="type-row">
+    <input class="type-input" id="type-input" type="text"
+      placeholder="Of typ een product…"
+      autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+      onkeydown="typeKeydown(event)">
+    <button class="type-btn" onclick="addTyped()">＋</button>
+  </div>
+
+  <!-- Lijst ook zichtbaar onderaan inspreken-tab -->
+  <div class="list-header">
+    <h2>Huidige lijst</h2>
+    <span class="list-count" id="list-count-spreek">0 items</span>
+  </div>
+  <div class="shopping-list" id="shopping-list-spreek"></div>
+  <div class="bottom-bar">
+    <button class="btn btn-wis" onclick="confirmClear()">🗑 Wissen</button>
+    <button class="btn btn-deel" onclick="shareList()">📤 Delen</button>
+  </div>
 </div>
 
-<div class="type-row">
-  <input
-    class="type-input"
-    id="type-input"
-    type="text"
-    placeholder="Of typ een product…"
-    autocomplete="off"
-    autocorrect="off"
-    autocapitalize="off"
-    spellcheck="false"
-    onkeydown="typeKeydown(event)"
-  >
-  <button class="type-btn" onclick="addTyped()">＋</button>
+<!-- FAVORIETEN -->
+<div class="panel" id="panel-fav">
+  <div class="fav-panel">
+    <div class="alpha-bar" id="alpha-bar"></div>
+    <div class="fav-grid" id="fav-grid"></div>
+  </div>
 </div>
 
-<div class="list-header">
-  <h2>Mijn lijst</h2>
-  <span class="list-count" id="list-count">0 items</span>
-</div>
-
-<div class="shopping-list" id="shopping-list"></div>
-
-<div class="bottom-bar">
-  <button class="btn btn-wis" onclick="confirmClear()">🗑 Wissen</button>
-  <button class="btn btn-deel" onclick="shareList()">📤 Delen</button>
+<!-- LIJST -->
+<div class="panel list-panel" id="panel-lijst">
+  <div class="list-header">
+    <h2>Mijn lijst</h2>
+    <span class="list-count" id="list-count">0 items</span>
+  </div>
+  <div class="shopping-list" id="shopping-list"></div>
+  <div class="bottom-bar">
+    <button class="btn btn-wis" onclick="confirmClear()">🗑 Wissen</button>
+    <button class="btn btn-deel" onclick="shareList()">📤 Delen</button>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-let list = JSON.parse(localStorage.getItem('boodschappen_v4') || '[]');
+// STATE
+let list      = JSON.parse(localStorage.getItem('boodschappen_list') || '[]');
+let favorites = JSON.parse(localStorage.getItem('boodschappen_favs') || '[]');
 let recognition = null;
 let listening = false;
 let accumulated = '';
+let activeAlpha = null;
+let currentTab = 'spreek';
 
-// Stopwoorden om te verwijderen
-const STOPWORDS = [
-  'ik heb nodig', 'ik wil', 'haal ook', 'vergeet niet', 'neem ook',
-  'ook nog', 'graag', 'please', 'alvast', 'straks', 'nog even',
-  'oh ja', 'en ook', 'oh en'
-];
+// STOPWOORDEN & PARSING
+const STOPWORDS = ['ik heb nodig','ik wil','haal ook','vergeet niet','neem ook','ook nog','graag','oh ja','en ook','oh en','alvast','straks'];
+const NUMBERS = {'een':1,'één':1,'twee':2,'drie':3,'vier':4,'vijf':5,'zes':6,'zeven':7,'acht':8,'negen':9,'tien':10};
 
-// Splitpatronen
-const SPLIT_PATTERN = /,|;|\sen\b|\sok\b|\splus\b/i;
-
-// Hoeveelheden in woord
-const NUMBERS = {
-  'een': 1, 'één': 1, 'twee': 2, 'drie': 3, 'vier': 4, 'vijf': 5,
-  'zes': 6, 'zeven': 7, 'acht': 8, 'negen': 9, 'tien': 10
-};
-
-function parseSpoken(text) {
-  // Verwijder stopwoorden
+function parseText(text) {
   let cleaned = text.toLowerCase();
-  for (const sw of STOPWORDS) {
-    cleaned = cleaned.replace(new RegExp(sw, 'gi'), ' ');
-  }
-
-  // Splits op scheidingstekens
-  const parts = cleaned.split(SPLIT_PATTERN).map(s => s.trim()).filter(s => s.length > 1);
-
+  for (const sw of STOPWORDS) cleaned = cleaned.replace(new RegExp(sw, 'gi'), ' ');
+  const parts = cleaned.split(/,|;|\sen\b|\sok\b|\splus\b/i).map(s => s.trim()).filter(s => s.length > 1);
   const items = [];
   for (const part of parts) {
-    let qty = 1;
-    let name = part;
-
-    // Zoek cijfer vooraan: "2 pakken melk", "drie appels"
+    let qty = 1, name = part;
     const numMatch = name.match(/^(\d+)\s+(.+)/);
-    if (numMatch) {
-      qty = parseInt(numMatch[1]);
-      name = numMatch[2];
-    } else {
-      // Zoek woord-getal vooraan
+    if (numMatch) { qty = parseInt(numMatch[1]); name = numMatch[2]; }
+    else {
       for (const [word, num] of Object.entries(NUMBERS)) {
         const re = new RegExp(`^${word}\\s+`, 'i');
-        if (re.test(name)) {
-          qty = num;
-          name = name.replace(re, '');
-          break;
-        }
+        if (re.test(name)) { qty = num; name = name.replace(re, ''); break; }
       }
     }
-
-    // Verwijder "pakken", "stuks", "liter", "kilo" etc. alleen als prefix
-    name = name.replace(/^(pak|pakken|stuks?|liter|kilo|gram|fles|flessen|blik|blikken|zak|zakken)\s+/i, '');
-    name = name.trim();
-
-    if (name.length > 1) {
-      items.push({ name: capitalize(name), qty });
-    }
+    name = name.replace(/^(pak|pakken|stuks?|liter|kilo|gram|fles|flessen|blik|blikken|zak|zakken)\s+/i, '').trim();
+    if (name.length > 1) items.push({ name: capitalize(name), qty });
   }
   return items;
 }
 
-function capitalize(s) {
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
+// ITEMS TOEVOEGEN
 function addItems(items) {
-  if (!items.length) {
-    setStatus('Geen producten herkend. Probeer opnieuw.', 'error');
-    return;
-  }
+  if (!items.length) { setStatus('Geen producten herkend. Probeer opnieuw.', 'error'); return; }
   for (const item of items) {
-    const existing = list.find(i => i.name.toLowerCase() === item.name.toLowerCase());
-    if (existing) existing.qty += item.qty;
+    // Voeg toe aan lijst
+    const inList = list.find(i => i.name.toLowerCase() === item.name.toLowerCase());
+    if (inList) inList.qty += item.qty;
     else list.push({ name: item.name, qty: item.qty, done: false, id: Date.now() + Math.random() });
+    // Onthoud als favoriet
+    if (!favorites.find(f => f.toLowerCase() === item.name.toLowerCase())) {
+      favorites.push(item.name);
+      favorites.sort((a, b) => a.localeCompare(b, 'nl'));
+    }
   }
   save(); render();
   setStatus(`✅ ${items.length} product${items.length !== 1 ? 'en' : ''} toegevoegd`, 'done');
   showToast(`${items.length} product${items.length !== 1 ? 'en' : ''} toegevoegd!`);
 }
 
-// --- SPRAAK ---
+// SPRAAK
 function setupRecognition() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) {
-    setStatus('Spraakherkenning niet beschikbaar in deze browser', 'error');
-    document.getElementById('mic-btn').style.opacity = '0.4';
-    return null;
-  }
+  if (!SR) { setStatus('Spraakherkenning niet beschikbaar', 'error'); return null; }
   const r = new SR();
-  r.lang = 'nl-NL';
-  r.continuous = true;
-  r.interimResults = true;
+  r.lang = 'nl-NL'; r.continuous = true; r.interimResults = true;
   r.onresult = (e) => {
     let interim = '';
     for (let i = e.resultIndex; i < e.results.length; i++) {
@@ -350,7 +383,7 @@ function setupRecognition() {
     if (display) setStatus(display, 'active', true);
   };
   r.onerror = (e) => {
-    if (e.error === 'not-allowed') setStatus('Microfoon geblokkeerd. Geef toestemming in je browser.', 'error');
+    if (e.error === 'not-allowed') setStatus('Microfoon geblokkeerd.', 'error');
     else if (e.error !== 'no-speech') showToast('Fout: ' + e.error);
     stopListening();
   };
@@ -358,16 +391,12 @@ function setupRecognition() {
   return r;
 }
 
-function toggleListen() {
-  if (listening) stopListening();
-  else startListening();
-}
+function toggleListen() { if (listening) stopListening(); else startListening(); }
 
 function startListening() {
   if (!recognition) recognition = setupRecognition();
   if (!recognition) return;
-  accumulated = '';
-  listening = true;
+  accumulated = ''; listening = true;
   document.getElementById('mic-btn').classList.add('listening');
   document.getElementById('mic-btn').textContent = '⏹️';
   document.getElementById('mic-label').textContent = 'Luisteren… tik om te stoppen';
@@ -383,49 +412,119 @@ function stopListening() {
   document.getElementById('mic-btn').textContent = '🎙️';
   document.getElementById('mic-label').textContent = 'Tik om in te spreken';
   document.getElementById('mic-label').classList.remove('active');
-
   const text = accumulated.trim();
-  if (text.length > 1) {
-    const items = parseSpoken(text);
-    addItems(items);
-  } else {
-    setStatus('Zeg bijv. "melk, brood en twee pakken yoghurt"', '');
-  }
+  if (text.length > 1) addItems(parseText(text));
+  else setStatus('Zeg bijv. "melk, brood en twee pakken yoghurt"', '');
 }
 
-// --- TYPEN ---
+// TYPEN
 function typeKeydown(e) { if (e.key === 'Enter') addTyped(); }
-
 function addTyped() {
   const input = document.getElementById('type-input');
-  const val = input.value.trim();
-  if (!val) return;
-  const items = parseSpoken(val);
-  // Als parsing niets oplevert, voeg de hele tekst toe als één item
+  const val = input.value.trim(); if (!val) return;
+  const items = parseText(val);
   const toAdd = items.length ? items : [{ name: capitalize(val), qty: 1 }];
   input.value = '';
   addItems(toAdd);
 }
 
+// STATUS
 function setStatus(text, state, showDot) {
   const bar = document.getElementById('status-bar');
   bar.className = 'status-bar' + (state ? ' ' + state : '');
   bar.innerHTML = (showDot ? '<div class="dot"></div>' : '') + `<span>${text}</span>`;
 }
 
-// --- LIJST ---
-function render() {
-  const container = document.getElementById('shopping-list');
-  document.getElementById('list-count').textContent = `${list.length} item${list.length !== 1 ? 's' : ''}`;
+// ===== FAVORIETEN TAB =====
+function buildAlpha() {
+  if (!favorites.length) return;
+  const letters = [...new Set(favorites.map(f => f[0].toUpperCase()))].sort();
+  const bar = document.getElementById('alpha-bar');
+  bar.innerHTML = letters.map(l =>
+    `<button class="alpha-btn ${activeAlpha === l ? 'selected' : ''}" onclick="selectAlpha('${l}')">${l}</button>`
+  ).join('');
+}
 
-  if (!list.length) {
-    container.innerHTML = `<div class="list-empty">Nog niets op de lijst.<br>Spreek in of typ een product.</div>`;
+function selectAlpha(letter) {
+  activeAlpha = activeAlpha === letter ? null : letter;
+  buildAlpha();
+  renderFavs();
+}
+
+function renderFavs() {
+  const grid = document.getElementById('fav-grid');
+  const filtered = activeAlpha
+    ? favorites.filter(f => f[0].toUpperCase() === activeAlpha)
+    : favorites;
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="fav-empty" style="grid-column:1/-1">
+      ${favorites.length === 0
+        ? 'Nog geen favorieten.<br>Spreek of typ producten in<br>en ze worden hier onthouden.'
+        : 'Geen producten met deze letter.'}
+    </div>`;
     return;
   }
 
+  const listNames = list.filter(i => !i.done).map(i => i.name.toLowerCase());
+  grid.innerHTML = filtered.map(name => {
+    const onList = listNames.includes(name.toLowerCase());
+    return `<div class="fav-card ${onList ? 'on-list' : ''}" onclick="toggleFav('${name.replace(/'/g,"\\'")}')">
+      <span>${name}</span>
+      <div style="display:flex;align-items:center;gap:4px">
+        ${onList ? '<span>✓</span>' : ''}
+        <button class="fav-del" onclick="deleteFav(event,'${name.replace(/'/g,"\\'")}')">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleFav(name) {
+  const existing = list.find(i => i.name.toLowerCase() === name.toLowerCase());
+  if (existing) {
+    // Al op lijst: verwijder
+    list = list.filter(i => i.name.toLowerCase() !== name.toLowerCase());
+    showToast(`${name} verwijderd`);
+  } else {
+    // Nog niet op lijst: voeg toe
+    list.push({ name, qty: 1, done: false, id: Date.now() + Math.random() });
+    showToast(`${name} toegevoegd`);
+  }
+  save(); render();
+}
+
+function deleteFav(e, name) {
+  e.stopPropagation();
+  favorites = favorites.filter(f => f.toLowerCase() !== name.toLowerCase());
+  if (activeAlpha) {
+    const stillHas = favorites.some(f => f[0].toUpperCase() === activeAlpha);
+    if (!stillHas) activeAlpha = null;
+  }
+  saveFavs();
+  buildAlpha();
+  renderFavs();
+  showToast(`${name} verwijderd uit favorieten`);
+}
+
+// ===== LIJST =====
+function renderList(containerId, countId) {
+  const container = document.getElementById(containerId);
+  const countEl = document.getElementById(countId);
+  if (!container) return;
+  const remaining = list.filter(i => !i.done).length;
+  countEl.textContent = `${list.length} item${list.length !== 1 ? 's' : ''}`;
+
+  // Badge in tab
+  const badge = document.getElementById('badge');
+  badge.textContent = remaining;
+  badge.style.display = remaining > 0 ? 'inline' : 'none';
+
+  if (!list.length) {
+    container.innerHTML = `<div class="list-empty">Nog niets op de lijst.<br>Spreek in, typ of kies uit favorieten.</div>`;
+    return;
+  }
   const undone = list.filter(i => !i.done);
   const done   = list.filter(i =>  i.done);
-
   container.innerHTML = [...undone, ...done].map(item => `
     <div class="list-item ${item.done ? 'done' : ''}">
       <button class="check-btn" onclick="toggleDone('${item.id}')">${item.done ? '✓' : ''}</button>
@@ -440,16 +539,20 @@ function render() {
   `).join('');
 }
 
+function render() {
+  renderList('shopping-list-spreek', 'list-count-spreek');
+  renderList('shopping-list', 'list-count');
+  renderFavs();
+}
+
 function toggleDone(id) {
   const i = list.find(x => x.id == id); if (i) i.done = !i.done;
   save(); render();
 }
-
 function changeQty(id, d) {
   const i = list.find(x => x.id == id);
   if (i) { i.qty = Math.max(1, i.qty + d); save(); render(); }
 }
-
 function removeItem(id) { list = list.filter(x => x.id != id); save(); render(); }
 
 function confirmClear() {
@@ -468,16 +571,29 @@ function shareList() {
   else navigator.clipboard.writeText(text).then(() => showToast('Gekopieerd!'));
 }
 
-function save() { localStorage.setItem('boodschappen_v4', JSON.stringify(list)); }
+// TABS
+function switchTab(tab) {
+  currentTab = tab;
+  ['spreek','fav','lijst'].forEach(t => {
+    document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+    document.getElementById('panel-' + t).classList.toggle('active', t === tab);
+  });
+  if (tab === 'fav') { buildAlpha(); renderFavs(); }
+}
+
+// OPSLAG
+function save() { localStorage.setItem('boodschappen_list', JSON.stringify(list)); saveFavs(); }
+function saveFavs() { localStorage.setItem('boodschappen_favs', JSON.stringify(favorites)); }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
+// INIT
 render();
+buildAlpha();
 </script>
 </body>
 </html>
