@@ -34,14 +34,10 @@
     flex-direction: column;
   }
 
-  header {
-    padding: 20px 20px 14px;
-    border-bottom: 1px solid var(--border);
-  }
+  header { padding: 20px 20px 14px; border-bottom: 1px solid var(--border); }
   header h1 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; }
   header p { font-size: 0.82rem; color: var(--muted); margin-top: 3px; }
 
-  /* MIC */
   .mic-section {
     padding: 22px 20px 16px;
     display: flex;
@@ -76,16 +72,14 @@
     animation: ring 1.2s ease-in-out infinite;
   }
 
-  @keyframes pulse  { 0%,100%{transform:scale(1)}   50%{transform:scale(1.06)} }
+  @keyframes pulse  { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
   @keyframes ring   { 0%{transform:scale(1);opacity:.5} 100%{transform:scale(1.35);opacity:0} }
-  @keyframes spin   { to{transform:rotate(360deg)} }
   @keyframes slideIn{ from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
   @keyframes blink  { 0%,100%{opacity:1} 50%{opacity:.2} }
 
   .mic-label { font-size: 0.85rem; font-weight: 600; color: var(--muted); }
   .mic-label.active { color: var(--accent); }
 
-  /* STATUS */
   .status-bar {
     margin: 0 20px 10px;
     min-height: 36px;
@@ -102,16 +96,11 @@
   }
   .status-bar.active { color: var(--text); font-style: normal; border-color: var(--accent); }
   .status-bar.done   { color: var(--accent); font-style: normal; border-color: var(--accent-dim); }
+  .status-bar.error  { color: var(--red); font-style: normal; border-color: var(--red-dim); }
 
-  .dot     { width:8px;height:8px;border-radius:50%;background:var(--accent);animation:blink 1s ease-in-out infinite;flex-shrink:0; }
-  .spinner { width:16px;height:16px;border:2px solid var(--border);border-top-color:#60a5fa;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0; }
+  .dot { width:8px; height:8px; border-radius:50%; background:var(--accent); animation:blink 1s ease-in-out infinite; flex-shrink:0; }
 
-  /* TYP ROW */
-  .type-row {
-    display: flex;
-    gap: 8px;
-    margin: 0 20px 12px;
-  }
+  .type-row { display: flex; gap: 8px; margin: 0 20px 12px; }
 
   .type-input {
     flex: 1;
@@ -124,7 +113,6 @@
     font-weight: 500;
     color: var(--text);
     outline: none;
-    /* Voorkomt browser-microfoon icoon: */
     -webkit-appearance: none;
     appearance: none;
   }
@@ -143,32 +131,11 @@
     cursor: pointer;
   }
 
-  /* LIJST */
-  .list-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4px 20px 8px;
-  }
-  .list-header h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
+  .list-header { display: flex; align-items: center; justify-content: space-between; padding: 4px 20px 8px; }
+  .list-header h2 { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
   .list-count { background: var(--surface2); color: var(--muted); border-radius: 99px; font-size: 0.72rem; font-weight: 700; padding: 2px 10px; }
 
-  .shopping-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 20px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-
+  .shopping-list { flex: 1; overflow-y: auto; padding: 0 20px 16px; display: flex; flex-direction: column; gap: 7px; }
   .list-empty { text-align: center; color: var(--muted); padding: 30px 20px; font-size: 0.88rem; line-height: 1.7; }
 
   .list-item {
@@ -189,9 +156,7 @@
     border: 2px solid var(--border);
     background: transparent;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     font-size: 0.8rem;
     flex-shrink: 0;
     color: transparent;
@@ -209,18 +174,14 @@
     border: 1px solid var(--border);
     background: var(--surface2);
     color: var(--text);
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 1.1rem; font-weight: 700;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     line-height: 1;
   }
   .qty-num { font-weight: 700; font-size: 0.95rem; min-width: 22px; text-align: center; color: var(--accent); }
   .del-btn { background: none; border: none; color: var(--muted); font-size: 1rem; cursor: pointer; padding: 4px; }
 
-  /* BOTTOM */
   .bottom-bar { padding: 10px 20px 22px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
   .btn { flex: 1; padding: 13px; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; border: none; }
   .btn-wis  { background: var(--red-dim);    color: var(--red);    flex: 1; }
@@ -284,15 +245,97 @@
 <div class="toast" id="toast"></div>
 
 <script>
-let list = JSON.parse(localStorage.getItem('boodschappen_v3') || '[]');
+let list = JSON.parse(localStorage.getItem('boodschappen_v4') || '[]');
 let recognition = null;
 let listening = false;
 let accumulated = '';
 
+// Stopwoorden om te verwijderen
+const STOPWORDS = [
+  'ik heb nodig', 'ik wil', 'haal ook', 'vergeet niet', 'neem ook',
+  'ook nog', 'graag', 'please', 'alvast', 'straks', 'nog even',
+  'oh ja', 'en ook', 'oh en'
+];
+
+// Splitpatronen
+const SPLIT_PATTERN = /,|;|\sen\b|\sok\b|\splus\b/i;
+
+// Hoeveelheden in woord
+const NUMBERS = {
+  'een': 1, 'één': 1, 'twee': 2, 'drie': 3, 'vier': 4, 'vijf': 5,
+  'zes': 6, 'zeven': 7, 'acht': 8, 'negen': 9, 'tien': 10
+};
+
+function parseSpoken(text) {
+  // Verwijder stopwoorden
+  let cleaned = text.toLowerCase();
+  for (const sw of STOPWORDS) {
+    cleaned = cleaned.replace(new RegExp(sw, 'gi'), ' ');
+  }
+
+  // Splits op scheidingstekens
+  const parts = cleaned.split(SPLIT_PATTERN).map(s => s.trim()).filter(s => s.length > 1);
+
+  const items = [];
+  for (const part of parts) {
+    let qty = 1;
+    let name = part;
+
+    // Zoek cijfer vooraan: "2 pakken melk", "drie appels"
+    const numMatch = name.match(/^(\d+)\s+(.+)/);
+    if (numMatch) {
+      qty = parseInt(numMatch[1]);
+      name = numMatch[2];
+    } else {
+      // Zoek woord-getal vooraan
+      for (const [word, num] of Object.entries(NUMBERS)) {
+        const re = new RegExp(`^${word}\\s+`, 'i');
+        if (re.test(name)) {
+          qty = num;
+          name = name.replace(re, '');
+          break;
+        }
+      }
+    }
+
+    // Verwijder "pakken", "stuks", "liter", "kilo" etc. alleen als prefix
+    name = name.replace(/^(pak|pakken|stuks?|liter|kilo|gram|fles|flessen|blik|blikken|zak|zakken)\s+/i, '');
+    name = name.trim();
+
+    if (name.length > 1) {
+      items.push({ name: capitalize(name), qty });
+    }
+  }
+  return items;
+}
+
+function capitalize(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function addItems(items) {
+  if (!items.length) {
+    setStatus('Geen producten herkend. Probeer opnieuw.', 'error');
+    return;
+  }
+  for (const item of items) {
+    const existing = list.find(i => i.name.toLowerCase() === item.name.toLowerCase());
+    if (existing) existing.qty += item.qty;
+    else list.push({ name: item.name, qty: item.qty, done: false, id: Date.now() + Math.random() });
+  }
+  save(); render();
+  setStatus(`✅ ${items.length} product${items.length !== 1 ? 'en' : ''} toegevoegd`, 'done');
+  showToast(`${items.length} product${items.length !== 1 ? 'en' : ''} toegevoegd!`);
+}
+
 // --- SPRAAK ---
 function setupRecognition() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) { setStatus('Spraakherkenning niet beschikbaar in deze browser', ''); return null; }
+  if (!SR) {
+    setStatus('Spraakherkenning niet beschikbaar in deze browser', 'error');
+    document.getElementById('mic-btn').style.opacity = '0.4';
+    return null;
+  }
   const r = new SR();
   r.lang = 'nl-NL';
   r.continuous = true;
@@ -306,7 +349,11 @@ function setupRecognition() {
     const display = (accumulated + interim).trim();
     if (display) setStatus(display, 'active', true);
   };
-  r.onerror = (e) => { if (e.error !== 'no-speech') showToast('Fout: ' + e.error); stopListening(); };
+  r.onerror = (e) => {
+    if (e.error === 'not-allowed') setStatus('Microfoon geblokkeerd. Geef toestemming in je browser.', 'error');
+    else if (e.error !== 'no-speech') showToast('Fout: ' + e.error);
+    stopListening();
+  };
   r.onend = () => { if (listening) { try { r.start(); } catch(e){} } };
   return r;
 }
@@ -336,94 +383,34 @@ function stopListening() {
   document.getElementById('mic-btn').textContent = '🎙️';
   document.getElementById('mic-label').textContent = 'Tik om in te spreken';
   document.getElementById('mic-label').classList.remove('active');
+
   const text = accumulated.trim();
-  if (text.length > 1) processWithAI(text);
-  else setStatus('Zeg bijv. "melk, brood en twee pakken yoghurt"', '');
+  if (text.length > 1) {
+    const items = parseSpoken(text);
+    addItems(items);
+  } else {
+    setStatus('Zeg bijv. "melk, brood en twee pakken yoghurt"', '');
+  }
 }
 
 // --- TYPEN ---
-function typeKeydown(e) {
-  if (e.key === 'Enter') addTyped();
-}
+function typeKeydown(e) { if (e.key === 'Enter') addTyped(); }
 
 function addTyped() {
   const input = document.getElementById('type-input');
   const val = input.value.trim();
   if (!val) return;
-
-  // Meerdere producten tegelijk: splits op komma of "en"
-  const parts = val.split(/,|\sen\s/i).map(s => s.trim()).filter(Boolean);
-  for (const part of parts) {
-    const existing = list.find(i => i.name.toLowerCase() === part.toLowerCase());
-    if (existing) existing.qty += 1;
-    else list.push({ name: capitalize(part), qty: 1, done: false, id: Date.now() + Math.random() });
-  }
-
+  const items = parseSpoken(val);
+  // Als parsing niets oplevert, voeg de hele tekst toe als één item
+  const toAdd = items.length ? items : [{ name: capitalize(val), qty: 1 }];
   input.value = '';
-  save(); render();
-  setStatus(`✅ ${parts.length} product${parts.length !== 1 ? 'en' : ''} toegevoegd`, 'done');
-  showToast(parts.length === 1 ? `${capitalize(parts[0])} toegevoegd` : `${parts.length} producten toegevoegd`);
+  addItems(toAdd);
 }
 
-function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
-// --- AI ---
-async function processWithAI(text) {
-  document.getElementById('mic-btn').textContent = '⏳';
-  document.getElementById('mic-label').textContent = 'Verwerken…';
-  setStatus(text, 'active', false, true);
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: `Je verwerkt gesproken boodschappenlijsten naar JSON.
-Geef ALLEEN een JSON array terug, geen uitleg, geen backticks.
-Formaat: [{"name":"Melk","qty":1},{"name":"Brood","qty":2}]
-- Hoofdletter per product
-- Hoeveelheid meenemen als genoemd, anders 1
-- Verwijder stopwoorden zoals "ik heb nodig", "haal ook", "en vergeet niet"
-- Splits alles in losse items`,
-        messages: [{ role: 'user', content: text }]
-      })
-    });
-
-    const data = await response.json();
-    const raw = data.content?.[0]?.text?.trim() || '[]';
-    let items;
-    try { items = JSON.parse(raw); }
-    catch { const m = raw.match(/\[[\s\S]*\]/); items = m ? JSON.parse(m[0]) : []; }
-
-    document.getElementById('mic-btn').textContent = '🎙️';
-    document.getElementById('mic-label').textContent = 'Tik om in te spreken';
-
-    if (!items.length) { setStatus('Geen producten herkend. Probeer opnieuw.', ''); return; }
-
-    for (const item of items) {
-      const existing = list.find(i => i.name.toLowerCase() === item.name.toLowerCase());
-      if (existing) existing.qty += (item.qty || 1);
-      else list.push({ name: item.name, qty: item.qty || 1, done: false, id: Date.now() + Math.random() });
-    }
-
-    save(); render();
-    setStatus(`✅ ${items.length} product${items.length !== 1 ? 'en' : ''} toegevoegd`, 'done');
-
-  } catch(err) {
-    document.getElementById('mic-btn').textContent = '🎙️';
-    document.getElementById('mic-label').textContent = 'Tik om in te spreken';
-    setStatus('Verbindingsfout. Probeer opnieuw.', '');
-  }
-}
-
-function setStatus(text, state, showDot, showSpinner) {
+function setStatus(text, state, showDot) {
   const bar = document.getElementById('status-bar');
   bar.className = 'status-bar' + (state ? ' ' + state : '');
-  bar.innerHTML = (showDot ? '<div class="dot"></div>' : '') +
-                  (showSpinner ? '<div class="spinner"></div>' : '') +
-                  `<span>${text}</span>`;
+  bar.innerHTML = (showDot ? '<div class="dot"></div>' : '') + `<span>${text}</span>`;
 }
 
 // --- LIJST ---
@@ -454,8 +441,7 @@ function render() {
 }
 
 function toggleDone(id) {
-  const i = list.find(x => x.id == id);
-  if (i) i.done = !i.done;
+  const i = list.find(x => x.id == id); if (i) i.done = !i.done;
   save(); render();
 }
 
@@ -464,10 +450,7 @@ function changeQty(id, d) {
   if (i) { i.qty = Math.max(1, i.qty + d); save(); render(); }
 }
 
-function removeItem(id) {
-  list = list.filter(x => x.id != id);
-  save(); render();
-}
+function removeItem(id) { list = list.filter(x => x.id != id); save(); render(); }
 
 function confirmClear() {
   if (!list.length) { showToast('Lijst is al leeg!'); return; }
@@ -485,7 +468,7 @@ function shareList() {
   else navigator.clipboard.writeText(text).then(() => showToast('Gekopieerd!'));
 }
 
-function save() { localStorage.setItem('boodschappen_v3', JSON.stringify(list)); }
+function save() { localStorage.setItem('boodschappen_v4', JSON.stringify(list)); }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
