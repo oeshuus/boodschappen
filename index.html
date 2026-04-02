@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>🛒 Inspreken</title>
+<title>🛒 Boodschappen</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
 
   :root {
     --bg: #0f1117;
@@ -35,190 +35,156 @@
   }
 
   header {
-    padding: 20px 20px 12px;
+    padding: 20px 20px 14px;
     border-bottom: 1px solid var(--border);
   }
+  header h1 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; }
+  header p { font-size: 0.82rem; color: var(--muted); margin-top: 3px; }
 
-  header h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 800;
-    letter-spacing: -1px;
-    color: var(--text);
-  }
-
-  header p {
-    font-size: 0.82rem;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-
-  /* MIC SECTIE */
+  /* MIC */
   .mic-section {
-    padding: 28px 20px 20px;
+    padding: 22px 20px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
   }
 
   .mic-btn {
-    width: 100px;
-    height: 100px;
+    width: 100px; height: 100px;
     border-radius: 50%;
     border: none;
     background: var(--surface2);
     cursor: pointer;
+    font-size: 2.7rem;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.8rem;
-    transition: all 0.2s;
-    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
-    position: relative;
+    user-select: none;
+    transition: background 0.2s;
   }
 
-  .mic-btn.listening {
-    background: var(--accent-dim);
-    animation: pulse 1.2s ease-in-out infinite;
-  }
-
+  .mic-btn.listening { background: var(--accent-dim); animation: pulse 1.2s ease-in-out infinite; }
   .mic-btn.listening::after {
     content: '';
     position: absolute;
-    inset: -6px;
+    inset: -8px;
     border-radius: 50%;
     border: 2px solid var(--accent);
-    opacity: 0.6;
+    opacity: 0.5;
     animation: ring 1.2s ease-in-out infinite;
   }
 
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.06); }
-  }
+  @keyframes pulse  { 0%,100%{transform:scale(1)}   50%{transform:scale(1.06)} }
+  @keyframes ring   { 0%{transform:scale(1);opacity:.5} 100%{transform:scale(1.35);opacity:0} }
+  @keyframes spin   { to{transform:rotate(360deg)} }
+  @keyframes slideIn{ from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes blink  { 0%,100%{opacity:1} 50%{opacity:.2} }
 
-  @keyframes ring {
-    0% { transform: scale(1); opacity: 0.6; }
-    100% { transform: scale(1.3); opacity: 0; }
-  }
-
-  .mic-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--muted);
-    letter-spacing: 0.02em;
-  }
-
+  .mic-label { font-size: 0.85rem; font-weight: 600; color: var(--muted); }
   .mic-label.active { color: var(--accent); }
 
-  /* TRANSCRIPT BUBBLE */
-  .transcript-box {
-    margin: 0 20px;
+  /* STATUS */
+  .status-bar {
+    margin: 0 20px 10px;
+    min-height: 36px;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px 16px;
-    min-height: 52px;
-    font-size: 0.95rem;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 0.84rem;
     color: var(--muted);
     font-style: italic;
-    transition: all 0.2s;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+  }
+  .status-bar.active { color: var(--text); font-style: normal; border-color: var(--accent); }
+  .status-bar.done   { color: var(--accent); font-style: normal; border-color: var(--accent-dim); }
+
+  .dot     { width:8px;height:8px;border-radius:50%;background:var(--accent);animation:blink 1s ease-in-out infinite;flex-shrink:0; }
+  .spinner { width:16px;height:16px;border:2px solid var(--border);border-top-color:#60a5fa;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0; }
+
+  /* TYP ROW */
+  .type-row {
+    display: flex;
+    gap: 8px;
+    margin: 0 20px 12px;
   }
 
-  .transcript-box.has-text {
+  .type-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
     color: var(--text);
-    font-style: normal;
-    border-color: var(--accent);
+    outline: none;
+    /* Voorkomt browser-microfoon icoon: */
+    -webkit-appearance: none;
+    appearance: none;
   }
+  .type-input:focus { border-color: var(--accent); }
+  .type-input::placeholder { color: var(--muted); font-style: italic; }
 
-  .transcript-box .spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    flex-shrink: 0;
-    display: none;
+  .type-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    color: var(--accent);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
   }
-
-  .transcript-box.loading .spinner { display: block; }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
 
   /* LIJST */
   .list-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 20px 8px;
+    padding: 4px 20px 8px;
   }
-
   .list-header h2 {
     font-family: 'Syne', sans-serif;
-    font-size: 1rem;
+    font-size: 0.82rem;
     font-weight: 700;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
-
-  .list-count {
-    background: var(--accent-dim);
-    color: var(--accent);
-    border-radius: 99px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 2px 9px;
-  }
+  .list-count { background: var(--surface2); color: var(--muted); border-radius: 99px; font-size: 0.72rem; font-weight: 700; padding: 2px 10px; }
 
   .shopping-list {
     flex: 1;
     overflow-y: auto;
-    padding: 4px 20px 20px;
+    padding: 0 20px 16px;
     display: flex;
     flex-direction: column;
     gap: 7px;
   }
 
-  .list-empty {
-    text-align: center;
-    color: var(--muted);
-    padding: 40px 20px;
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
-  .list-empty .icon { font-size: 3rem; margin-bottom: 10px; display: block; }
+  .list-empty { text-align: center; color: var(--muted); padding: 30px 20px; font-size: 0.88rem; line-height: 1.7; }
 
   .list-item {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 12px 14px;
+    padding: 11px 13px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    animation: slideIn 0.25s ease;
-    transition: opacity 0.2s, transform 0.2s;
+    gap: 11px;
+    animation: slideIn 0.22s ease;
   }
-
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .list-item.done {
-    opacity: 0.45;
-  }
+  .list-item.done { opacity: 0.4; }
 
   .check-btn {
-    width: 28px;
-    height: 28px;
+    width: 28px; height: 28px;
     border-radius: 50%;
     border: 2px solid var(--border);
     background: transparent;
@@ -226,35 +192,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     flex-shrink: 0;
-    transition: all 0.15s;
     color: transparent;
+    transition: all 0.15s;
   }
+  .list-item.done .check-btn { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 
-  .list-item.done .check-btn {
-    background: var(--accent-dim);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .item-name {
-    flex: 1;
-    font-weight: 500;
-    font-size: 0.97rem;
-  }
-
+  .item-name { flex: 1; font-weight: 500; font-size: 0.97rem; }
   .list-item.done .item-name { text-decoration: line-through; color: var(--muted); }
 
-  .qty-ctrl {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
+  .qty-ctrl { display: flex; align-items: center; gap: 5px; }
   .qty-btn {
-    width: 26px;
-    height: 26px;
+    width: 26px; height: 26px;
     border-radius: 7px;
     border: 1px solid var(--border);
     background: var(--surface2);
@@ -267,92 +217,32 @@
     justify-content: center;
     line-height: 1;
   }
+  .qty-num { font-weight: 700; font-size: 0.95rem; min-width: 22px; text-align: center; color: var(--accent); }
+  .del-btn { background: none; border: none; color: var(--muted); font-size: 1rem; cursor: pointer; padding: 4px; }
 
-  .qty-num {
-    font-weight: 700;
-    font-size: 0.95rem;
-    min-width: 22px;
-    text-align: center;
-    color: var(--accent);
-  }
+  /* BOTTOM */
+  .bottom-bar { padding: 10px 20px 22px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+  .btn { flex: 1; padding: 13px; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; border: none; }
+  .btn-wis  { background: var(--red-dim);    color: var(--red);    flex: 1; }
+  .btn-deel { background: var(--accent-dim); color: var(--accent); flex: 2; }
 
-  .del-btn {
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 4px;
-    transition: color 0.15s;
-  }
-  .del-btn:hover { color: var(--red); }
-
-  /* BOTTOM BUTTONS */
-  .bottom-bar {
-    padding: 12px 20px 20px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 10px;
-  }
-
-  .btn {
-    flex: 1;
-    padding: 13px;
-    border-radius: 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: none;
-    transition: all 0.15s;
-  }
-
-  .btn-wis {
-    background: var(--red-dim);
-    color: var(--red);
-    flex: 1;
-  }
-
-  .btn-wis:active { transform: scale(0.97); }
-
-  .btn-deel {
-    background: var(--accent-dim);
-    color: var(--accent);
-    flex: 2;
-  }
-
-  .btn-deel:active { transform: scale(0.97); }
-
-  /* TOAST */
   .toast {
-    position: fixed;
-    bottom: 90px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--surface2);
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 99px;
-    padding: 10px 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    opacity: 0;
-    transition: all 0.3s;
-    white-space: nowrap;
-    z-index: 999;
+    position: fixed; bottom: 90px; left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--surface2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 99px;
+    padding: 10px 20px; font-size: 0.85rem; font-weight: 600;
+    opacity: 0; transition: all 0.25s; white-space: nowrap;
+    z-index: 999; pointer-events: none;
   }
-
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
 
 <header>
   <h1>🛒 Boodschappen</h1>
-  <p>Spreek in wat je nodig hebt</p>
+  <p>Inspreken of typen</p>
 </header>
 
 <div class="mic-section">
@@ -360,9 +250,23 @@
   <div class="mic-label" id="mic-label">Tik om in te spreken</div>
 </div>
 
-<div class="transcript-box" id="transcript-box">
-  <div class="spinner"></div>
-  <span id="transcript-text">Wat je inspreekt, verschijnt hier...</span>
+<div class="status-bar" id="status-bar">
+  <span id="status-text">Zeg bijv. "melk, brood en twee pakken yoghurt"</span>
+</div>
+
+<div class="type-row">
+  <input
+    class="type-input"
+    id="type-input"
+    type="text"
+    placeholder="Of typ een product…"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck="false"
+    onkeydown="typeKeydown(event)"
+  >
+  <button class="type-btn" onclick="addTyped()">＋</button>
 </div>
 
 <div class="list-header">
@@ -380,113 +284,94 @@
 <div class="toast" id="toast"></div>
 
 <script>
-let list = JSON.parse(localStorage.getItem('spraak_boodschappen') || '[]');
+let list = JSON.parse(localStorage.getItem('boodschappen_v3') || '[]');
 let recognition = null;
 let listening = false;
-let accumulatedText = '';
+let accumulated = '';
 
-// --- SPRAAKHERKENNING ---
+// --- SPRAAK ---
 function setupRecognition() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    document.getElementById('mic-label').textContent = 'Spraak niet ondersteund op dit apparaat';
-    document.getElementById('mic-btn').style.opacity = '0.4';
-    document.getElementById('mic-btn').style.cursor = 'default';
-    return null;
-  }
-
-  const r = new SpeechRecognition();
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { setStatus('Spraakherkenning niet beschikbaar in deze browser', ''); return null; }
+  const r = new SR();
   r.lang = 'nl-NL';
   r.continuous = true;
   r.interimResults = true;
-
   r.onresult = (e) => {
     let interim = '';
-    let finalChunk = '';
     for (let i = e.resultIndex; i < e.results.length; i++) {
-      if (e.results[i].isFinal) {
-        finalChunk += e.results[i][0].transcript + ' ';
-      } else {
-        interim += e.results[i][0].transcript;
-      }
+      if (e.results[i].isFinal) accumulated += e.results[i][0].transcript + ' ';
+      else interim += e.results[i][0].transcript;
     }
-    if (finalChunk) accumulatedText += finalChunk;
-    const display = (accumulatedText + interim).trim();
-    showTranscript(display || '...');
+    const display = (accumulated + interim).trim();
+    if (display) setStatus(display, 'active', true);
   };
-
-  r.onerror = (e) => {
-    if (e.error !== 'no-speech') {
-      showToast('Fout: ' + e.error);
-    }
-    stopListening();
-  };
-
-  r.onend = () => {
-    if (listening) {
-      // Herstart als we nog luisteren
-      try { r.start(); } catch(e) {}
-    }
-  };
-
+  r.onerror = (e) => { if (e.error !== 'no-speech') showToast('Fout: ' + e.error); stopListening(); };
+  r.onend = () => { if (listening) { try { r.start(); } catch(e){} } };
   return r;
 }
 
 function toggleListen() {
-  if (listening) {
-    stopListening();
-  } else {
-    startListening();
-  }
+  if (listening) stopListening();
+  else startListening();
 }
 
 function startListening() {
   if (!recognition) recognition = setupRecognition();
   if (!recognition) return;
-
-  accumulatedText = '';
+  accumulated = '';
   listening = true;
   document.getElementById('mic-btn').classList.add('listening');
   document.getElementById('mic-btn').textContent = '⏹️';
-  document.getElementById('mic-label').textContent = 'Aan het luisteren... Tik om te stoppen';
+  document.getElementById('mic-label').textContent = 'Luisteren… tik om te stoppen';
   document.getElementById('mic-label').classList.add('active');
-  showTranscript('...');
-
+  setStatus('Aan het luisteren…', 'active', true);
   try { recognition.start(); } catch(e) {}
 }
 
 function stopListening() {
   listening = false;
-  if (recognition) { try { recognition.stop(); } catch(e) {} }
+  if (recognition) { try { recognition.stop(); } catch(e){} }
   document.getElementById('mic-btn').classList.remove('listening');
   document.getElementById('mic-btn').textContent = '🎙️';
   document.getElementById('mic-label').textContent = 'Tik om in te spreken';
   document.getElementById('mic-label').classList.remove('active');
-
-  const text = accumulatedText.trim();
-  if (text && text.length > 1) {
-    processWithAI(text);
-  } else {
-    showTranscript('Wat je inspreekt, verschijnt hier...');
-  }
+  const text = accumulated.trim();
+  if (text.length > 1) processWithAI(text);
+  else setStatus('Zeg bijv. "melk, brood en twee pakken yoghurt"', '');
 }
 
-function showTranscript(text) {
-  const el = document.getElementById('transcript-text');
-  const box = document.getElementById('transcript-box');
-  el.textContent = text;
-  if (text && text !== 'Wat je inspreekt, verschijnt hier...') {
-    box.classList.add('has-text');
-  } else {
-    box.classList.remove('has-text');
-  }
+// --- TYPEN ---
+function typeKeydown(e) {
+  if (e.key === 'Enter') addTyped();
 }
 
-// --- AI VERWERKING ---
+function addTyped() {
+  const input = document.getElementById('type-input');
+  const val = input.value.trim();
+  if (!val) return;
+
+  // Meerdere producten tegelijk: splits op komma of "en"
+  const parts = val.split(/,|\sen\s/i).map(s => s.trim()).filter(Boolean);
+  for (const part of parts) {
+    const existing = list.find(i => i.name.toLowerCase() === part.toLowerCase());
+    if (existing) existing.qty += 1;
+    else list.push({ name: capitalize(part), qty: 1, done: false, id: Date.now() + Math.random() });
+  }
+
+  input.value = '';
+  save(); render();
+  setStatus(`✅ ${parts.length} product${parts.length !== 1 ? 'en' : ''} toegevoegd`, 'done');
+  showToast(parts.length === 1 ? `${capitalize(parts[0])} toegevoegd` : `${parts.length} producten toegevoegd`);
+}
+
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+// --- AI ---
 async function processWithAI(text) {
-  const box = document.getElementById('transcript-box');
-  box.classList.add('loading');
-  showTranscript('Verwerken...');
+  document.getElementById('mic-btn').textContent = '⏳';
+  document.getElementById('mic-label').textContent = 'Verwerken…';
+  setStatus(text, 'active', false, true);
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -495,90 +380,73 @@ async function processWithAI(text) {
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
-        system: `Je bent een assistent die gesproken boodschappenlijsten verwerkt.
-De gebruiker spreekt in wat hij/zij nodig heeft. Jij extraheert de producten en hoeveelheden.
-
-Geef ALLEEN een JSON array terug, zonder uitleg, zonder markdown backticks.
-Formaat: [{"name": "Melk", "qty": 2}, {"name": "Brood", "qty": 1}]
-
-Regels:
-- Zet producten netjes op met hoofdletter
-- Als een hoeveelheid wordt genoemd, gebruik die. Anders qty: 1.
-- Verwijder stopwoorden zoals "ik heb nodig", "haal ook", "vergeet niet", etc.
-- Splits samengestelde boodschappen in aparte items
-- Vertaal eventuele Engels naar Nederlands`,
+        system: `Je verwerkt gesproken boodschappenlijsten naar JSON.
+Geef ALLEEN een JSON array terug, geen uitleg, geen backticks.
+Formaat: [{"name":"Melk","qty":1},{"name":"Brood","qty":2}]
+- Hoofdletter per product
+- Hoeveelheid meenemen als genoemd, anders 1
+- Verwijder stopwoorden zoals "ik heb nodig", "haal ook", "en vergeet niet"
+- Splits alles in losse items`,
         messages: [{ role: 'user', content: text }]
       })
     });
 
     const data = await response.json();
     const raw = data.content?.[0]?.text?.trim() || '[]';
-
     let items;
-    try {
-      items = JSON.parse(raw);
-    } catch {
-      // Probeer JSON te extraheren
-      const match = raw.match(/\[[\s\S]*\]/);
-      items = match ? JSON.parse(match[0]) : [];
-    }
+    try { items = JSON.parse(raw); }
+    catch { const m = raw.match(/\[[\s\S]*\]/); items = m ? JSON.parse(m[0]) : []; }
 
-    box.classList.remove('loading');
+    document.getElementById('mic-btn').textContent = '🎙️';
+    document.getElementById('mic-label').textContent = 'Tik om in te spreken';
 
-    if (items.length === 0) {
-      showTranscript('Geen producten herkend. Probeer opnieuw.');
-      return;
-    }
+    if (!items.length) { setStatus('Geen producten herkend. Probeer opnieuw.', ''); return; }
 
-    // Voeg toe aan lijst
-    let added = 0;
     for (const item of items) {
       const existing = list.find(i => i.name.toLowerCase() === item.name.toLowerCase());
-      if (existing) {
-        existing.qty += (item.qty || 1);
-      } else {
-        list.push({ name: item.name, qty: item.qty || 1, done: false, id: Date.now() + Math.random() });
-        added++;
-      }
+      if (existing) existing.qty += (item.qty || 1);
+      else list.push({ name: item.name, qty: item.qty || 1, done: false, id: Date.now() + Math.random() });
     }
 
-    save();
-    render();
-    showTranscript(`✅ ${items.length} product${items.length !== 1 ? 'en' : ''} toegevoegd aan je lijst`);
-    showToast(`${items.length} producten toegevoegd!`);
+    save(); render();
+    setStatus(`✅ ${items.length} product${items.length !== 1 ? 'en' : ''} toegevoegd`, 'done');
 
-  } catch (err) {
-    box.classList.remove('loading');
-    showTranscript('Fout bij verwerken. Controleer je verbinding.');
-    console.error(err);
+  } catch(err) {
+    document.getElementById('mic-btn').textContent = '🎙️';
+    document.getElementById('mic-label').textContent = 'Tik om in te spreken';
+    setStatus('Verbindingsfout. Probeer opnieuw.', '');
   }
+}
+
+function setStatus(text, state, showDot, showSpinner) {
+  const bar = document.getElementById('status-bar');
+  bar.className = 'status-bar' + (state ? ' ' + state : '');
+  bar.innerHTML = (showDot ? '<div class="dot"></div>' : '') +
+                  (showSpinner ? '<div class="spinner"></div>' : '') +
+                  `<span>${text}</span>`;
 }
 
 // --- LIJST ---
 function render() {
   const container = document.getElementById('shopping-list');
-  const countEl = document.getElementById('list-count');
+  document.getElementById('list-count').textContent = `${list.length} item${list.length !== 1 ? 's' : ''}`;
 
-  const remaining = list.filter(i => !i.done).length;
-  countEl.textContent = `${list.length} item${list.length !== 1 ? 's' : ''}`;
-
-  if (list.length === 0) {
-    container.innerHTML = `<div class="list-empty"><span class="icon">🎙️</span>Spreek in wat je nodig hebt<br>en je lijst verschijnt hier.</div>`;
+  if (!list.length) {
+    container.innerHTML = `<div class="list-empty">Nog niets op de lijst.<br>Spreek in of typ een product.</div>`;
     return;
   }
 
   const undone = list.filter(i => !i.done);
-  const done = list.filter(i => i.done);
-  const sorted = [...undone, ...done];
+  const done   = list.filter(i =>  i.done);
 
-  container.innerHTML = sorted.map(item => `
-    <div class="list-item ${item.done ? 'done' : ''}" id="item-${item.id}">
+  container.innerHTML = [...undone, ...done].map(item => `
+    <div class="list-item ${item.done ? 'done' : ''}">
       <button class="check-btn" onclick="toggleDone('${item.id}')">${item.done ? '✓' : ''}</button>
       <span class="item-name">${item.name}</span>
       <div class="qty-ctrl">
-        <button class="qty-btn" onclick="changeQty('${item.id}', -1)">−</button>
+        <button class="qty-btn" onclick="changeQty('${item.id}',-1)">−</button>
         <span class="qty-num">${item.qty}</span>
-        <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+        <button class="qty-btn" onclick="changeQty('${item.id}',1)">+</button>
       </div>
       <button class="del-btn" onclick="removeItem('${item.id}')">✕</button>
     </div>
@@ -586,47 +454,38 @@ function render() {
 }
 
 function toggleDone(id) {
-  const item = list.find(i => i.id == id);
-  if (item) item.done = !item.done;
+  const i = list.find(x => x.id == id);
+  if (i) i.done = !i.done;
   save(); render();
 }
 
-function changeQty(id, delta) {
-  const item = list.find(i => i.id == id);
-  if (item) {
-    item.qty = Math.max(1, item.qty + delta);
-    save(); render();
-  }
+function changeQty(id, d) {
+  const i = list.find(x => x.id == id);
+  if (i) { i.qty = Math.max(1, i.qty + d); save(); render(); }
 }
 
 function removeItem(id) {
-  list = list.filter(i => i.id != id);
+  list = list.filter(x => x.id != id);
   save(); render();
 }
 
 function confirmClear() {
-  if (list.length === 0) { showToast('Lijst is al leeg!'); return; }
+  if (!list.length) { showToast('Lijst is al leeg!'); return; }
   if (confirm(`Lijst wissen? (${list.length} items)`)) {
-    list = [];
-    save(); render();
-    showTranscript('Wat je inspreekt, verschijnt hier...');
+    list = []; save(); render();
+    setStatus('Spreek in of typ een product', '');
     showToast('Lijst gewist ✓');
   }
 }
 
 function shareList() {
-  if (list.length === 0) { showToast('Lijst is leeg!'); return; }
+  if (!list.length) { showToast('Lijst is leeg!'); return; }
   const text = '🛒 Boodschappen:\n' + list.filter(i => !i.done).map(i => `• ${i.qty > 1 ? i.qty + 'x ' : ''}${i.name}`).join('\n');
-  if (navigator.share) {
-    navigator.share({ title: 'Boodschappen', text });
-  } else {
-    navigator.clipboard.writeText(text).then(() => showToast('Gekopieerd!'));
-  }
+  if (navigator.share) navigator.share({ title: 'Boodschappen', text });
+  else navigator.clipboard.writeText(text).then(() => showToast('Gekopieerd!'));
 }
 
-function save() {
-  localStorage.setItem('spraak_boodschappen', JSON.stringify(list));
-}
+function save() { localStorage.setItem('boodschappen_v3', JSON.stringify(list)); }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -635,7 +494,6 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// Init
 render();
 </script>
 </body>
