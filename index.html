@@ -4,7 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>🛒 Boodschappen</title>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0f1117">
+<title>Boodschappen</title>
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="manifest" href="manifest.json">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
 
@@ -38,7 +43,6 @@
   header h1 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
   header p { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
 
-  /* TABS */
   .tabs {
     display: flex;
     border-bottom: 1px solid var(--border);
@@ -57,11 +61,9 @@
   }
   .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-  /* PANELS */
   .panel { display: none; flex: 1; flex-direction: column; overflow: hidden; }
   .panel.active { display: flex; }
 
-  /* ===== PANEL: INSPREKEN ===== */
   .mic-section {
     padding: 18px 20px 12px;
     display: flex;
@@ -138,15 +140,8 @@
     font-weight: 700; font-size: 1rem; cursor: pointer;
   }
 
-  /* ===== PANEL: FAVORIETEN ===== */
   .fav-panel { padding: 12px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; overflow: hidden; }
-
-  .alpha-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    justify-content: flex-start;
-  }
+  .alpha-bar { display: flex; flex-wrap: wrap; gap: 5px; }
   .alpha-btn {
     width: 32px; height: 32px;
     border-radius: 8px;
@@ -157,10 +152,8 @@
     color: var(--text);
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    transition: all 0.12s;
   }
   .alpha-btn.selected { background: var(--accent); color: #0f1117; border-color: var(--accent); }
-  .alpha-btn:active { transform: scale(0.92); }
 
   .fav-empty { text-align: center; color: var(--muted); padding: 30px 10px; font-size: 0.87rem; line-height: 1.7; }
 
@@ -183,14 +176,11 @@
     font-size: 0.88rem;
     display: flex; align-items: center; justify-content: space-between;
     gap: 6px;
-    transition: all 0.12s;
     animation: slideIn 0.2s ease;
   }
-  .fav-card:active { transform: scale(0.96); }
   .fav-card.on-list { border-color: var(--accent); background: #0d2118; color: var(--accent); }
   .fav-card .fav-del { color: var(--muted); font-size: 0.8rem; padding: 2px 4px; background: none; border: none; cursor: pointer; flex-shrink: 0; }
 
-  /* ===== PANEL: LIJST ===== */
   .list-panel { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
   .list-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px 6px; }
   .list-header h2 { font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
@@ -228,7 +218,6 @@
   .qty-num { font-weight: 700; font-size: 0.93rem; min-width: 20px; text-align: center; color: var(--accent); }
   .del-btn { background: none; border: none; color: var(--muted); font-size: 0.95rem; cursor: pointer; padding: 4px; }
 
-  /* BOTTOM */
   .bottom-bar { padding: 8px 20px 20px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
   .btn { flex: 1; padding: 12px; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.88rem; cursor: pointer; border: none; }
   .btn-wis  { background: var(--red-dim); color: var(--red); flex: 1; }
@@ -259,7 +248,6 @@
   <div class="tab" id="tab-lijst" onclick="switchTab('lijst')">📋 Lijst <span id="badge" style="display:none;background:#4ade80;color:#0f1117;border-radius:99px;font-size:0.68rem;padding:1px 6px;margin-left:2px">0</span></div>
 </div>
 
-<!-- INSPREKEN -->
 <div class="panel active" id="panel-spreek">
   <div class="mic-section">
     <button class="mic-btn" id="mic-btn" onclick="toggleListen()">🎙️</button>
@@ -275,8 +263,6 @@
       onkeydown="typeKeydown(event)">
     <button class="type-btn" onclick="addTyped()">＋</button>
   </div>
-
-  <!-- Lijst ook zichtbaar onderaan inspreken-tab -->
   <div class="list-header">
     <h2>Huidige lijst</h2>
     <span class="list-count" id="list-count-spreek">0 items</span>
@@ -288,7 +274,6 @@
   </div>
 </div>
 
-<!-- FAVORIETEN -->
 <div class="panel" id="panel-fav">
   <div class="fav-panel">
     <div class="alpha-bar" id="alpha-bar"></div>
@@ -296,7 +281,6 @@
   </div>
 </div>
 
-<!-- LIJST -->
 <div class="panel list-panel" id="panel-lijst">
   <div class="list-header">
     <h2>Mijn lijst</h2>
@@ -312,16 +296,13 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// STATE
 let list      = JSON.parse(localStorage.getItem('boodschappen_list') || '[]');
 let favorites = JSON.parse(localStorage.getItem('boodschappen_favs') || '[]');
 let recognition = null;
 let listening = false;
 let accumulated = '';
 let activeAlpha = null;
-let currentTab = 'spreek';
 
-// STOPWOORDEN & PARSING
 const STOPWORDS = ['ik heb nodig','ik wil','haal ook','vergeet niet','neem ook','ook nog','graag','oh ja','en ook','oh en','alvast','straks'];
 const NUMBERS = {'een':1,'één':1,'twee':2,'drie':3,'vier':4,'vijf':5,'zes':6,'zeven':7,'acht':8,'negen':9,'tien':10};
 
@@ -348,15 +329,12 @@ function parseText(text) {
 
 function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-// ITEMS TOEVOEGEN
 function addItems(items) {
   if (!items.length) { setStatus('Geen producten herkend. Probeer opnieuw.', 'error'); return; }
   for (const item of items) {
-    // Voeg toe aan lijst
     const inList = list.find(i => i.name.toLowerCase() === item.name.toLowerCase());
     if (inList) inList.qty += item.qty;
     else list.push({ name: item.name, qty: item.qty, done: false, id: Date.now() + Math.random() });
-    // Onthoud als favoriet
     if (!favorites.find(f => f.toLowerCase() === item.name.toLowerCase())) {
       favorites.push(item.name);
       favorites.sort((a, b) => a.localeCompare(b, 'nl'));
@@ -367,7 +345,6 @@ function addItems(items) {
   showToast(`${items.length} product${items.length !== 1 ? 'en' : ''} toegevoegd!`);
 }
 
-// SPRAAK
 function setupRecognition() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) { setStatus('Spraakherkenning niet beschikbaar', 'error'); return null; }
@@ -417,7 +394,6 @@ function stopListening() {
   else setStatus('Zeg bijv. "melk, brood en twee pakken yoghurt"', '');
 }
 
-// TYPEN
 function typeKeydown(e) { if (e.key === 'Enter') addTyped(); }
 function addTyped() {
   const input = document.getElementById('type-input');
@@ -428,44 +404,34 @@ function addTyped() {
   addItems(toAdd);
 }
 
-// STATUS
 function setStatus(text, state, showDot) {
   const bar = document.getElementById('status-bar');
   bar.className = 'status-bar' + (state ? ' ' + state : '');
   bar.innerHTML = (showDot ? '<div class="dot"></div>' : '') + `<span>${text}</span>`;
 }
 
-// ===== FAVORIETEN TAB =====
 function buildAlpha() {
-  if (!favorites.length) return;
+  if (!favorites.length) { document.getElementById('alpha-bar').innerHTML = ''; return; }
   const letters = [...new Set(favorites.map(f => f[0].toUpperCase()))].sort();
-  const bar = document.getElementById('alpha-bar');
-  bar.innerHTML = letters.map(l =>
+  document.getElementById('alpha-bar').innerHTML = letters.map(l =>
     `<button class="alpha-btn ${activeAlpha === l ? 'selected' : ''}" onclick="selectAlpha('${l}')">${l}</button>`
   ).join('');
 }
 
 function selectAlpha(letter) {
   activeAlpha = activeAlpha === letter ? null : letter;
-  buildAlpha();
-  renderFavs();
+  buildAlpha(); renderFavs();
 }
 
 function renderFavs() {
   const grid = document.getElementById('fav-grid');
-  const filtered = activeAlpha
-    ? favorites.filter(f => f[0].toUpperCase() === activeAlpha)
-    : favorites;
-
+  const filtered = activeAlpha ? favorites.filter(f => f[0].toUpperCase() === activeAlpha) : favorites;
   if (!filtered.length) {
     grid.innerHTML = `<div class="fav-empty" style="grid-column:1/-1">
-      ${favorites.length === 0
-        ? 'Nog geen favorieten.<br>Spreek of typ producten in<br>en ze worden hier onthouden.'
-        : 'Geen producten met deze letter.'}
+      ${favorites.length === 0 ? 'Nog geen favorieten.<br>Spreek of typ producten in<br>en ze worden hier onthouden.' : 'Geen producten met deze letter.'}
     </div>`;
     return;
   }
-
   const listNames = list.filter(i => !i.done).map(i => i.name.toLowerCase());
   grid.innerHTML = filtered.map(name => {
     const onList = listNames.includes(name.toLowerCase());
@@ -482,11 +448,9 @@ function renderFavs() {
 function toggleFav(name) {
   const existing = list.find(i => i.name.toLowerCase() === name.toLowerCase());
   if (existing) {
-    // Al op lijst: verwijder
     list = list.filter(i => i.name.toLowerCase() !== name.toLowerCase());
     showToast(`${name} verwijderd`);
   } else {
-    // Nog niet op lijst: voeg toe
     list.push({ name, qty: 1, done: false, id: Date.now() + Math.random() });
     showToast(`${name} toegevoegd`);
   }
@@ -496,25 +460,17 @@ function toggleFav(name) {
 function deleteFav(e, name) {
   e.stopPropagation();
   favorites = favorites.filter(f => f.toLowerCase() !== name.toLowerCase());
-  if (activeAlpha) {
-    const stillHas = favorites.some(f => f[0].toUpperCase() === activeAlpha);
-    if (!stillHas) activeAlpha = null;
-  }
-  saveFavs();
-  buildAlpha();
-  renderFavs();
+  if (activeAlpha && !favorites.some(f => f[0].toUpperCase() === activeAlpha)) activeAlpha = null;
+  saveFavs(); buildAlpha(); renderFavs();
   showToast(`${name} verwijderd uit favorieten`);
 }
 
-// ===== LIJST =====
 function renderList(containerId, countId) {
   const container = document.getElementById(containerId);
   const countEl = document.getElementById(countId);
   if (!container) return;
   const remaining = list.filter(i => !i.done).length;
   countEl.textContent = `${list.length} item${list.length !== 1 ? 's' : ''}`;
-
-  // Badge in tab
   const badge = document.getElementById('badge');
   badge.textContent = remaining;
   badge.style.display = remaining > 0 ? 'inline' : 'none';
@@ -545,14 +501,8 @@ function render() {
   renderFavs();
 }
 
-function toggleDone(id) {
-  const i = list.find(x => x.id == id); if (i) i.done = !i.done;
-  save(); render();
-}
-function changeQty(id, d) {
-  const i = list.find(x => x.id == id);
-  if (i) { i.qty = Math.max(1, i.qty + d); save(); render(); }
-}
+function toggleDone(id) { const i = list.find(x => x.id == id); if (i) i.done = !i.done; save(); render(); }
+function changeQty(id, d) { const i = list.find(x => x.id == id); if (i) { i.qty = Math.max(1, i.qty + d); save(); render(); } }
 function removeItem(id) { list = list.filter(x => x.id != id); save(); render(); }
 
 function confirmClear() {
@@ -571,9 +521,7 @@ function shareList() {
   else navigator.clipboard.writeText(text).then(() => showToast('Gekopieerd!'));
 }
 
-// TABS
 function switchTab(tab) {
-  currentTab = tab;
   ['spreek','fav','lijst'].forEach(t => {
     document.getElementById('tab-' + t).classList.toggle('active', t === tab);
     document.getElementById('panel-' + t).classList.toggle('active', t === tab);
@@ -581,7 +529,6 @@ function switchTab(tab) {
   if (tab === 'fav') { buildAlpha(); renderFavs(); }
 }
 
-// OPSLAG
 function save() { localStorage.setItem('boodschappen_list', JSON.stringify(list)); saveFavs(); }
 function saveFavs() { localStorage.setItem('boodschappen_favs', JSON.stringify(favorites)); }
 
@@ -591,7 +538,6 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// INIT
 render();
 buildAlpha();
 </script>
